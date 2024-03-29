@@ -13,8 +13,8 @@ router = APIRouter(prefix="/diabetics")
 async def root():
     return "Diabetics API"
 
-ModelLocation = "Machine Learning\ML Models\Diabetics_logistic_model.sav"
-ScalarLocation = "Machine Learning\ML Models\Diabeticsscaler.sav"
+ModelLocation = "Machine Learning/ML Models/Diabetics_logistic_model.sav"
+ScalarLocation = "Machine Learning/ML Models/Diabeticsscaler.sav"
 
 diabetics_mlmodel = pickle.load(open(ModelLocation, "rb"))
 diabetics_scaler = pickle.load(open(ScalarLocation, "rb"))
