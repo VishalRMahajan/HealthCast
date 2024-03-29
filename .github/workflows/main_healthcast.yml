@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: release.zip
+          path: frontend/release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -72,4 +72,3 @@ jobs:
           app-name: 'HealthCast'
           slot-name: 'Production'
           package: .
-          
