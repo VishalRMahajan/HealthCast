@@ -1,10 +1,10 @@
+import json
+import pickle
+import numpy as np
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from Backend.models.diabetics import Diabetics
-import pickle
-import json
+from backend.models.diabetics import Diabetics
 from sklearn.preprocessing import StandardScaler
-import numpy as np
 
 router = APIRouter(prefix="/diabetics")
 
@@ -19,11 +19,11 @@ ScalarLocation = "Backend\Machine Learning\ML Models\Diabeticsscaler.sav"
 diabetics_mlmodel = pickle.load(open(ModelLocation, "rb"))
 diabetics_scaler = pickle.load(open(ScalarLocation, "rb"))
 
+
 @router.post("/predict")
 async def predict_diabetics(input: Diabetics):
     input_data = input.model_dump_json()
     input_dict = json.loads(input_data)
-
 
     pregnancies = int(input_dict["pregnancies"])
     glucose = int(input_dict["glucose"])
@@ -43,50 +43,45 @@ async def predict_diabetics(input: Diabetics):
     if probability < 0.2:
         print("Probability of Having Diabetes is Very Low")
         return JSONResponse(
-                status_code=status.HTTP_200_OK,
-                content={
-                    "percentage": "20",
-                    "message": "Probability of Having Diabetes is Very Low"
-                },
+            status_code=status.HTTP_200_OK,
+            content={
+                "percentage": "20",
+                "message": "Probability of Having Diabetes is Very Low"
+            }
         )
     elif probability < 0.4:
         print("Probability of Having Diabetes is Low")
         return JSONResponse(
-                status_code=status.HTTP_200_OK,
-                content={
-                    "percentage": "40",
-                    "message": "Probability of Having Diabetes is Low"
-                },
+            status_code=status.HTTP_200_OK,
+            content={
+                "percentage": "40",
+                "message": "Probability of Having Diabetes is Low"
+            }
         )
     elif probability < 0.6:
         print( "Probability of Having Diabetes is Moderate")
         return JSONResponse(
-                status_code=status.HTTP_200_OK,
-                content={
-                    "percentage": "60",
-                    "message": "Probability of Having Diabetes is Moderate"
-                },
+            status_code=status.HTTP_200_OK,
+            content={
+                "percentage": "60",
+                "message": "Probability of Having Diabetes is Moderate"
+            }
         )
     elif probability < 0.8:
         print("Probability of Having Diabetes is High")
         return JSONResponse(
-                status_code=status.HTTP_200_OK,
-                content={
-                    "percentage": "80",
-                    "message": "Probability of Having Diabetes is High"
-                },
+            status_code=status.HTTP_200_OK,
+            content={
+                "percentage": "80",
+                "message": "Probability of Having Diabetes is High"
+            }
         )
     else:
         print("Probability of Having Diabetes is Very High")
         return JSONResponse(
-                status_code=status.HTTP_200_OK,
-                content={
-                    "percentage": "100",
-                    "message": "Probability of Having Diabetes is Very High"
-                },
+            status_code=status.HTTP_200_OK,
+            content={
+                "percentage": "100",
+                "message": "Probability of Having Diabetes is Very High"
+            }
         )
-
-    
-            
-
-    

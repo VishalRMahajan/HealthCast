@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Diabetics(BaseModel):
     pregnancies: int
     glucose: int
