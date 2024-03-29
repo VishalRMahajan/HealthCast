@@ -13,8 +13,8 @@ router = APIRouter(prefix="/diabetics")
 async def root():
     return "Diabetics API"
 
-ModelLocation = "Backend\Machine Learning\ML Models\Diabetics_logistic_model.sav"
-ScalarLocation = "Backend\Machine Learning\ML Models\Diabeticsscaler.sav"
+ModelLocation = "Machine Learning\ML Models\Diabetics_logistic_model.sav"
+ScalarLocation = "Machine Learning\ML Models\Diabeticsscaler.sav"
 
 diabetics_mlmodel = pickle.load(open(ModelLocation, "rb"))
 diabetics_scaler = pickle.load(open(ScalarLocation, "rb"))
@@ -85,3 +85,21 @@ async def predict_diabetics(input: Diabetics):
                 "message": "Probability of Having Diabetes is Very High"
             }
         )
+
+
+@router.post("/bmi")
+async def bmi(data: dict):
+    weight_kg = data["weight"]
+    feet = data["feet"]
+    inches = data["inches"]
+
+    height_m = (feet * 0.3048) + (inches * 0.0254)
+
+    bmi = weight_kg / (height_m ** 2)
+
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            "bmi": bmi
+        }
+    )
