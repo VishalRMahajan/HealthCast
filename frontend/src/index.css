@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.brandName {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.brandName:hover {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.Navbar .buttonContainer button {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.Navbar .buttonContainer button:hover {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
