@@ -1,4 +1,4 @@
-from config import DB_URL
+from backend.config import DB_URL
 
 from sqlalchemy.orm import declarative_base, Session
 from sqlalchemy import create_engine
