@@ -1,5 +1,6 @@
 fastapi
 fastapi-login
+fastapi-mail
 uvicorn
 gunicorn
 sqlalchemy

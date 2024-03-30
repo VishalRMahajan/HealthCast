@@ -53,13 +53,17 @@ def get_diabetics(user: Users):
         for report in query:
             reports.append(
                 {
-                    "pregnancies": report.pregnancies,
-                    "glucose": report.glucose,
-                    "blood_pressure": report.blood_pressure,
-                    "insulin": report.insulin,
-                    "bmi": report.bmi,
-                    "diabetes_pedigree_function": report.diabetes_pedigree_function,
-                    "age": report.age
+                    "id": report.id,
+                    "timestamp": report.datetime.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "report": {
+                        "pregnancies": report.pregnancies,
+                        "glucose": report.glucose,
+                        "blood_pressure": report.blood_pressure,
+                        "insulin": report.insulin,
+                        "bmi": report.bmi,
+                        "diabetes_pedigree_function": report.diabetes_pedigree_function,
+                        "age": report.age
+                    }
                 }
             )
         return reports

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.routes.auth import router as auth_router
 from backend.routes.diabetics import router as diabetics_router
-from backend.routes.login import router as login_router
 
 app = FastAPI()
 
@@ -22,5 +22,5 @@ async def root():
     return "Connected to the server!"
 
 
-app.include_router(router=login_router)
+app.include_router(router=auth_router)
 app.include_router(router=diabetics_router)
