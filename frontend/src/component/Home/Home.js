@@ -18,11 +18,12 @@ const Home = ({ setPage }) => {
     >
       <div className="w-[45%] flex gap-5 flex-col justify-center">
         <h1 className="text-7xl font-bold">Providing Best Diagnosis</h1>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Reprehenderit quae, modi nobis at recusandae excepturi, labore
-          reiciendis alias odit nihil dolorum? Mollitia nesciunt molestias alias
-          est tempore ad sed ea.
+        <p className="text-xl font-semibold">
+          Welcome to HealthCast! We're here to redefine disease diagnosis with
+          state-of-the-art technology and predictive analytics. Our platform
+          empowers healthcare professionals to make faster, more accurate
+          decisions, ultimately improving patient outcomes. Join us in
+          revolutionizing healthcare delivery!
         </p>
         <div>
           <Link
