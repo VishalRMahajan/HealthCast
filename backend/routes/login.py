@@ -16,17 +16,14 @@ async def login(login_form: OAuth2PasswordRequestForm = Depends()):
     password = login_form.password
     user = query_user(user=username)
     if not user:
-        print(f"User: {username} not found")
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
     elif password != user.password:
-        print(f"User: {username} Password does not match")
         raise InvalidCredentialsException
     else:
         access_token = manager.create_access_token(data={"sub": username})
-        print(f"User: {username} has logged in!")
         return JSONResponse(
             status_code=status.HTTP_200_OK,
             content={"access_token": access_token, "token_type": "bearer"}

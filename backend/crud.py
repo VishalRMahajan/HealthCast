@@ -1,5 +1,7 @@
 import json
 import pickle
+from datetime import datetime, timedelta
+from secrets import token_hex
 
 from fastapi_login import LoginManager
 from numpy import array
@@ -7,7 +9,7 @@ from sqlalchemy.exc import NoResultFound
 
 from backend.config import SECRET
 from backend.database import database
-from backend.models import Users
+from backend.models import Users, Diabetes
 from backend.schemas import Diabetics
 
 manager = LoginManager(SECRET, token_url="/auth/login")
@@ -27,7 +29,52 @@ def query_user(user: str):
         return None
 
 
+def add_diabetics(user: Users, data: Diabetics):
+    now = datetime.utcnow() + timedelta(hours=5, minutes=30)
+    record = Diabetes()
+    record.id = token_hex(3)
+    record.datetime = now
+    record.username = user.username
+    record.pregnancies = data.pregnancies
+    record.glucose = data.glucose
+    record.blood_pressure = data.blood_pressure
+    record.insulin = data.insulin
+    record.bmi = data.bmi
+    record.diabetes_pedigree_function = data.diabetes_pedigree_function
+    record.age = data.age
+    database.add(record)
+    database.commit()
+
+
+def get_diabetics(user: Users):
+    try:
+        query = database.query(Diabetes).filter_by(username=user.username).all()
+        reports = []
+        for report in query:
+            reports.append(
+                {
+                    "pregnancies": report.pregnancies,
+                    "glucose": report.glucose,
+                    "blood_pressure": report.blood_pressure,
+                    "insulin": report.insulin,
+                    "bmi": report.bmi,
+                    "diabetes_pedigree_function": report.diabetes_pedigree_function,
+                    "age": report.age
+                }
+            )
+        return reports
+    except NoResultFound:
+        return None
+
+
+# TODO: Work on this function
+def email_reports(user: Users):
+    pass
+
+
 def predict_diabetes(user: Users, data: Diabetics):
+    if user is not None:
+        add_diabetics(user, data)
     input_data = data.model_dump_json()
     input_dict = json.loads(input_data)
     pregnancies = int(input_dict["pregnancies"])
@@ -37,8 +84,7 @@ def predict_diabetes(user: Users, data: Diabetics):
     bmi = int(input_dict["bmi"])
     diabetes_pedigree_function = int(input_dict["diabetes_pedigree_function"])
     age = int(input_dict["age"])
-    data = array([pregnancies, glucose, blood_pressure, insulin, bmi, diabetes_pedigree_function, age]).reshape(1,
-                                                                                                                -1)
+    data = array([pregnancies, glucose, blood_pressure, insulin, bmi, diabetes_pedigree_function, age]).reshape(1, -1)
     std_data = diabetics_scaler.transform(data)
     prediction = diabetics_mlmodel.predict(std_data)
     probability = diabetics_mlmodel.predict_proba(std_data)[:, 1]
