@@ -1,10 +1,10 @@
 import json
 import pickle
-import pandas as pd
-import numpy as np
 from datetime import datetime, timedelta
 from secrets import token_hex
 
+import numpy as np
+import pandas as pd
 from fastapi_login import LoginManager
 from numpy import array
 from sqlalchemy.exc import NoResultFound
@@ -13,8 +13,6 @@ from backend.config import SECRET
 from backend.database import database
 from backend.models import Users, Diabetes
 from backend.schemas import Diabetics
-
-
 
 manager = LoginManager(SECRET, token_url="/auth/login")
 
@@ -173,7 +171,7 @@ def calculate_bmi(user: Users, data: dict):
     return {"bmi": bmi}
 
 
-def predict_diseases(user: Users, data: list):
+def predict_disease(user: Users, data: list):
     Symptoms = np.array(Severity_dataframe["Symptom"])
     weight = np.array(Severity_dataframe["weight"])
 

@@ -23,5 +23,6 @@ async def root():
     return "Connected to the server!"
 
 
-app.include_router(router=login_router)
+app.include_router(router=auth_router)
 app.include_router(router=diabetics_router)
+app.include_router(router=diseases_router)
