@@ -1,5 +1,6 @@
 import json
 import pickle
+import math
 from datetime import datetime, timedelta
 from secrets import token_hex
 
@@ -27,6 +28,7 @@ DecisionTree = pickle.load(open(DecisionTreeLocation, "rb"))
 disease_dataframe = pd.read_csv('Machine Learning/datasets/Disease_Dataset.csv')
 description_dataframe = pd.read_csv('Machine Learning/datasets/symptom_Description.csv')
 Precaution_dataframe = pd.read_csv('Machine Learning/datasets/symptom_precaution.csv')
+Precaution_dataframe = Precaution_dataframe.fillna("Take rest")
 Severity_dataframe = pd.read_csv('Machine Learning/datasets/Symptom-severity.csv')
 
 
@@ -171,7 +173,8 @@ def calculate_bmi(user: Users, data: dict):
     return {"bmi": bmi}
 
 
-def predict_disease(user: Users, data: list):
+def predict_disease(user: Users, User_Symptoms: list):
+    Severity_dataframe['Symptom'] = Severity_dataframe['Symptom'].str.replace('_', ' ')
     Symptoms = np.array(Severity_dataframe["Symptom"])
     weight = np.array(Severity_dataframe["weight"])
 
@@ -187,12 +190,14 @@ def predict_disease(user: Users, data: list):
 
     User_Symptoms = np.array(User_Symptoms).reshape(1, -1)
     prediciton = DecisionTree.predict(User_Symptoms)
-    
-    description = description_dataframe[description_dataframe['Disease'] == prediciton[0]].values[0][1]
-    Precautions = Precaution_dataframe[Precaution_dataframe['Disease'] == prediciton[0]].drop('Disease',axis=1).values.tolist()[0]
+    prediciton = prediciton.tolist()
 
+    description = description_dataframe[description_dataframe['Disease'] == prediciton[0]].values[0][1]
+    
+    Precautions = Precaution_dataframe[Precaution_dataframe['Disease'] == prediciton[0]].drop('Disease',axis=1).values.tolist()[0]
+       
     return {
-        "Disease": prediciton,
+        "Disease": prediciton[0],
         "Description": description,
         "Precautions": Precautions
     }
