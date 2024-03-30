@@ -2,6 +2,12 @@
   border-top: 2px solid rgb(177, 177, 177);
   margin: 10px 0;
 }
+input {
+  border: none;
+  padding: 8px 15px;
+  margin: 8px 0;
+  width: 100%;
+}
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

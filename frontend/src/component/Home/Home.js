@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Metric from "./Metric";
 
@@ -39,19 +39,21 @@ const Home = ({ setPage }) => {
           <Metric icon="fa-solid fa-handshake-simple" text="Reliable" />
         </div>
       </div>
-      <div className="Hero w-[40%] relative flex pt-5">
-        <div
-          className={`bg-green-500 w-[50%] rounded-t-2xl mt-5 transition-all ${
-            isLoaded ? "green-slide-in" : ""
-          }`}
-        ></div>
-        <div
-          className={`bg-orange-400 w-[30%] rounded-tr-2xl mt-24 transition-all ${
-            isLoaded ? "orange-slide-in" : ""
-          }`}
-        ></div>
-        <img src="hero.png" alt="doctor" className="absolute bottom-0" />
-      </div>
+      <Suspense>
+        <div className="Hero w-[40%] relative flex pt-5">
+          <div
+            className={`bg-green-500 w-[50%] rounded-t-2xl mt-5 transition-all ${
+              isLoaded ? "green-slide-in" : ""
+            }`}
+          ></div>
+          <div
+            className={`bg-orange-400 w-[30%] rounded-tr-2xl mt-24 transition-all ${
+              isLoaded ? "orange-slide-in" : ""
+            }`}
+          ></div>
+          <img src="hero.png" alt="doctor" className="absolute bottom-0" />
+        </div>
+      </Suspense>
     </div>
   );
 };
