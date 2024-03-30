@@ -4,7 +4,7 @@ const Placeholder = () => {
   return (
     <div className="Placeholder grow flex items-center justify-center">
       <div className="opacity-50 text-center">
-        <img src="app_icon.png" alt="" />
+        <img src="app_icon.png" alt="" className="w-96" />
         <h1 className="text-4xl font-bold mt-5 tracking-wider">
           <span className="text-green-500">HEALTH</span>
           <span className="text-orange-400">CAST</span>

@@ -3,7 +3,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import About from "./component/About/About";
-import Auth from "./component/Authorization/Auth";
 import Home from "./component/Home/Home";
 import Services from "./component/Services/Services";
 import Contact from "./component/Contact/Contact";
@@ -27,7 +26,7 @@ function App() {
           {/* Auth */}
           <Route path="/login" element={<Navigate to="/auth" />} />
           <Route path="/register" element={<Navigate to="/auth" />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/auth" element={<h1>Auth</h1>} />
         </Routes>
       </BrowserRouter>
     </div>
