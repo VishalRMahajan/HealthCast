@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from sqlalchemy.exc import NoResultFound
 
 from backend.config import SECRET
-from backend.models.database import database
+from backend.models.database import get_db
 from backend.models.users import Users
 
 router = APIRouter(prefix="/auth")
@@ -21,7 +21,8 @@ class UserLoginRequest(BaseModel):
 
 
 @manager.user_loader()
-def query_user(email_id):
+def query_user(email_id: str):
+    database = get_db()
     try:
         return database.query(Users).filter_by(email=email_id).one()
     except NoResultFound:
