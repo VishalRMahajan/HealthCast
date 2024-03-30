@@ -1,6 +1,13 @@
 fastapi
+fastapi-login
 uvicorn
 gunicorn
 sqlalchemy
 python-dotenv
+python-multipart
 psycopg2-binary
+pandas
+numpy
+scikit-learn
+jupyter
+pydantic
