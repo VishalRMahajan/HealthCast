@@ -12,6 +12,18 @@ code {
     monospace;
 }
 
+input,
+input:focus,
+input:hover,
+input:active,
+select,
+select:focus,
+select:hover,
+select:active {
+  outline: none;
+}
+
+
 .brandName {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -20,9 +32,9 @@ code {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.Navbar .buttonContainer button {
+.Navbar .buttonContainer a {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.Navbar .buttonContainer button:hover {
+.Navbar .buttonContainer a:hover {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }

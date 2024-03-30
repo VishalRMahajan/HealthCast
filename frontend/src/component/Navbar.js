@@ -1,23 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="Navbar bg-teal-400 rounded-full shadow-lg px-10 py-3 flex justify-between ">
-      <a
-        href="/"
+    <div className="Navbar sticky top-0 z-50 grow-0 bg-teal-400 rounded-full shadow-lg px-10 py-3 flex justify-between mb-8">
+      <Link
+        to="/"
         className="flex items-center tracking-wider transition-all text-2xl font-bold text-white/90 brandName hover:text-white"
       >
         {/* <img src="favicon.png" alt="logo" className="logo w-10" /> */}
         <span>Health</span>
         <span>Cast</span>
-      </a>
+      </Link>
       <div className="buttonContainer flex gap-6 justify-between text-white font-semibold text-lg">
-        <button>Services</button>
-        <button>About</button>
-        <button>Contact us</button>
-        <button className=" border-2 border-white transition-all rounded-full py-1 px-3 shadow hover:shadow-md flex items-center">
-          Login
-        </button>
+        <Link>Services</Link>
+        <Link>About</Link>
+        <Link>Contact us</Link>
+        <Link to="/auth">Login</Link>
       </div>
     </div>
   );
