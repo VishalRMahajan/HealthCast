@@ -1,5 +1,7 @@
 import json
 import pickle
+import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 from secrets import token_hex
 
@@ -12,13 +14,22 @@ from backend.database import database
 from backend.models import Users, Diabetes
 from backend.schemas import Diabetics
 
+
+
 manager = LoginManager(SECRET, token_url="/auth/login")
 
 ModelLocation = "Machine Learning/ML Models/Diabetics_logistic_model.sav"
 ScalarLocation = "Machine Learning/ML Models/DiabeticsScaler.sav"
+DecisionTreeLocation = "Machine Learning/ML Models/Disease_DecisionTree_Model.sav"
 
 diabetics_mlmodel = pickle.load(open(ModelLocation, "rb"))
 diabetics_scaler = pickle.load(open(ScalarLocation, "rb"))
+DecisionTree = pickle.load(open(DecisionTreeLocation, "rb"))
+
+disease_dataframe = pd.read_csv('Machine Learning/datasets/Disease_Dataset.csv')
+description_dataframe = pd.read_csv('Machine Learning/datasets/symptom_Description.csv')
+Precaution_dataframe = pd.read_csv('Machine Learning/datasets/symptom_precaution.csv')
+Severity_dataframe = pd.read_csv('Machine Learning/datasets/Symptom-severity.csv')
 
 
 @manager.user_loader()
@@ -160,3 +171,30 @@ def calculate_bmi(user: Users, data: dict):
     height_m = (feet * 0.3048) + (inches * 0.0254)
     bmi = weight_kg / (height_m ** 2)
     return {"bmi": bmi}
+
+
+def predict_diseases(user: Users, data: list):
+    Symptoms = np.array(Severity_dataframe["Symptom"])
+    weight = np.array(Severity_dataframe["weight"])
+
+    for data in range(len(User_Symptoms)):
+        for symp in range(len(Symptoms)):
+            if User_Symptoms[data] == Symptoms[symp]:
+                User_Symptoms[data] = weight[symp]
+
+    
+    filled_0 = 17 - len(User_Symptoms)
+    for i in range(filled_0):
+        User_Symptoms.append(0)
+
+    User_Symptoms = np.array(User_Symptoms).reshape(1, -1)
+    prediciton = DecisionTree.predict(User_Symptoms)
+    
+    description = description_dataframe[description_dataframe['Disease'] == prediciton[0]].values[0][1]
+    Precautions = Precaution_dataframe[Precaution_dataframe['Disease'] == prediciton[0]].drop('Disease',axis=1).values.tolist()[0]
+
+    return {
+        "Disease": prediciton,
+        "Description": description,
+        "Precautions": Precautions
+    }
