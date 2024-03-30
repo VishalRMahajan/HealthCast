@@ -1,10 +1,11 @@
 import json
 import pickle
+
 import numpy as np
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
+
 from backend.models.diabetics import Diabetics
-from sklearn.preprocessing import StandardScaler
 
 router = APIRouter(prefix="/diabetics")
 
