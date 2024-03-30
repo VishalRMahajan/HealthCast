@@ -1,22 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({page}) => {
   return (
-    <div className="Navbar sticky top-0 z-50 grow-0 bg-teal-400 rounded-full shadow-lg px-10 py-3 flex justify-between mb-8">
+    <div className="Navbar flex grow-0 items-center justify-between">
       <Link
         to="/"
-        className="flex items-center tracking-wider transition-all text-2xl font-bold text-white/90 brandName hover:text-white"
+        className="Brand flex items-center"
       >
-        {/* <img src="favicon.png" alt="logo" className="logo w-10" /> */}
-        <span>Health</span>
-        <span>Cast</span>
+        <img src="app_icon.png" alt="" className="w-8 mr-2" />
+        <h1>
+          <span className="text-green-500 font-bold text-xl">HEALTH</span>
+          <span className="text-orange-400 font-bold text-xl">CAST</span>
+        </h1>
       </Link>
-      <div className="buttonContainer flex gap-6 justify-between text-white font-semibold text-lg">
-        <Link>Services</Link>
-        <Link>About</Link>
-        <Link>Contact us</Link>
-        <Link to="/auth">Login</Link>
+      <div className="Menu font-semibold font-gr">
+        <Link
+          to="/"
+          className={`NavLink hover: ${page === "home" ? "active" : ""}`}
+        >
+          Home
+        </Link>
+        <Link
+          to="/services"
+          className={`NavLink ${page === "services" ? "active" : ""}`}
+        >
+          Services
+        </Link>
+        <Link
+          to="/about"
+          className={`NavLink hover: ${page === "about" ? "active" : ""}`}
+        >
+          About
+        </Link>
+        <Link
+          to="/contact"
+          className={`NavLink hover: ${page === "contact" ? "active" : ""}`}
+        >
+          Contact
+        </Link>
+      </div>
+      <div className="AuthLink font-semibold">
+        <Link to="/login" className="NavLink">
+          Sign In
+        </Link>
+        <Link
+          to="/register"
+          className="Navlink bg-orange-400 hover:bg-orange-500 px-4 py-3 text-white rounded"
+        >
+          Sign Up
+        </Link>
       </div>
     </div>
   );

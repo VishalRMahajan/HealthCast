@@ -7,9 +7,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+.Hero:hover div {
+  margin-top: 0;
+}
+.Hero:hover div:first-child {
+  border-top-right-radius: 0;
 }
 
 input,
@@ -23,18 +37,79 @@ select:active {
   outline: none;
 }
 
-
-.brandName {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.Navbar .NavLink {
+  margin: 0 1.5rem;
 }
 
-.brandName:hover {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+.NavLink {
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s;
+}
+.NavLink.active {
+  transform: translateY(-2px);
+  color: #22c55e;
 }
 
-.Navbar .buttonContainer a {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.NavLink.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Adjust as needed */
+  width: 100%;
+  height: 2.5px; /* Underline height */
+  background-color: #fb923c; /* Underline color */
+  border-radius: 5px;
+  animation: underlineAnimation 0.3s ease forwards;
 }
-.Navbar .buttonContainer a:hover {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+.NavLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Adjust as needed */
+  width: 0;
+  height: 2.5px; /* Underline height */
+  background-color: #fb923c;  /* Underline color */
+  border-radius: 5px;
+  animation: retractAnimation 0.3s ease forwards;
+}
+
+@keyframes underlineAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes retractAnimation {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideInFromBottom 1s ease forwards;
+}
+
+.green-slide-in {
+  animation-delay: 0.5s; /* Delay the animation for 0.5 seconds */
+}
+
+.orange-slide-in {
+  animation-delay: 0.5s; /* Delay the animation for 0.5 seconds */
 }
