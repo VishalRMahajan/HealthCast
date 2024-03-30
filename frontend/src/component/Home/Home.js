@@ -8,7 +8,7 @@ const Home = ({ setPage }) => {
   useEffect(() => {
     setPage("home");
     setIsLoaded(true);
-  }, []);
+  }, [setPage]);
 
   return (
     <div

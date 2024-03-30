@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-const About = ({ setPage }) => {
+const Contact = ({ setPage }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setPage("about");
+    setPage("contact");
     setIsLoaded(true);
   }, [setPage]);
 
-  return <div>About</div>;
+  return <div>Contact</div>;
 };
 
-export default About;
+export default Contact;

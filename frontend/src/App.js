@@ -6,6 +6,7 @@ import About from "./component/About/About";
 import Auth from "./component/Authorization/Auth";
 import Home from "./component/Home/Home";
 import Services from "./component/Services/Services";
+import Contact from "./component/Contact/Contact";
 
 function App() {
   const [page, setPage] = React.useState("");
@@ -21,6 +22,9 @@ function App() {
           <Route path="/services" element={<Services setPage={setPage} />} />
           {/* About */}
           <Route path="/about" element={<About setPage={setPage} />} />
+          {/* Contact */}
+          <Route path="/contact" element={<Contact setPage={setPage} />} />
+          {/* Auth */}
           <Route path="/login" element={<Navigate to="/auth" />} />
           <Route path="/register" element={<Navigate to="/auth" />} />
           <Route path="/auth" element={<Auth />} />
