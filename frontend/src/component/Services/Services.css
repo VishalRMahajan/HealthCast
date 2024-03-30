@@ -3,7 +3,7 @@
   margin: 10px 0;
 }
 .Services input {
-  border: none;
+  border: solid;
   padding: 8px 15px;
   margin: 8px 0;
   width: 100%;
