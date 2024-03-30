@@ -1,39 +1,20 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
-from pydantic import BaseModel
-from sqlalchemy.exc import NoResultFound
 
-from backend.config import SECRET
-from backend.models.database import get_db
-from backend.models.users import Users
+from backend.crud import manager, query_user
+
+# from backend.schemas import UserLoginRequest
 
 router = APIRouter(prefix="/auth")
-manager = LoginManager(SECRET, "/auth/login")
-
-
-class UserLoginRequest(BaseModel):
-    """Request model for the login endpoint"""
-    email: str
-    password: str
-
-
-@manager.user_loader()
-def query_user(email_id: str):
-    database = get_db()
-    try:
-        return database.query(Users).filter_by(email=email_id).one()
-    except NoResultFound:
-        return None
 
 
 @router.post("/login")
 async def login(login_form: OAuth2PasswordRequestForm = Depends()):
     username = login_form.username
     password = login_form.password
-    user = query_user(username)
+    user = query_user(user=username)
     if not user:
         print(f"User: {username} not found")
         raise HTTPException(
@@ -56,5 +37,5 @@ async def login(login_form: OAuth2PasswordRequestForm = Depends()):
 async def data(user=Depends(manager)):
     return JSONResponse(
         status_code=200,
-        content="You are logged in as " + user.email
+        content="You are logged in as " + user.username
     )
