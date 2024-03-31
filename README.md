@@ -46,7 +46,9 @@ Our project aims to address these challenges by developing a machine learning-ba
    - Monitor system performance and conduct regular maintenance to address any issues or updates.
 
 ## Demo
-https://github.com/VishalRMahajan/HealthCast/assets/111660265/62470540-dbb8-46a3-9ad5-6c342683b869
+https://github.com/VishalRMahajan/HealthCast/assets/111660265/75210605-feb5-4c40-867d-580cb2fb65d4
+
+If the video above isn't loading or playing, you can watch it here on [Youtube](https://youtu.be/acmxltnAErg?si=yUbxNqOOj8n1LpIH)
 
 
 ## Features
