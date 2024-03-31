@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Services.css";
-import Diabetes from "./Diabetes";
+import Diabetes from "./Diabetes/Diabetes";
 import Placeholder from "./Placeholder";
+import Disease from "./Disease/Disease";
 
 const Services = ({ setPage }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,10 +40,10 @@ const Services = ({ setPage }) => {
           </p>
         </div>
       </div>
-      <div className="w-[1px] bg-gray-500 mx-6 my-3"></div>
+      <div className="w-[1px] h-full bg-gray-500 mx-6 my-3"></div>
       {param === "" && <Placeholder />}
       {param === "diabetes" && <Diabetes />}
-      {param === "disease" && <h1>Disease</h1>}
+      {param === "disease" && <Disease />}
     </div>
   );
 };
