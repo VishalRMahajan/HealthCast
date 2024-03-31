@@ -38,6 +38,12 @@ const AnimatedResult = ({ result }) => {
             </li>
           ))}
         </ul>
+        <p className="font-medium text-xl my-2">Disclamer</p>
+        <p>
+          Prediciton is based on the data on which model is trained. We CORS
+          Crushers do not guarantee about the prediciton. Please Consult you
+          doctor before it is too late.
+        </p>
       </div>
     </>
   );

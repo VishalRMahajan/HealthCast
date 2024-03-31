@@ -55,6 +55,10 @@ const Register = ({ setPage }) => {
       if (email === "" || username === "" || password === "") {
         setError("Please fill all the fields");
       } else {
+        if (password.length < 8) {
+          setError("Password must be at least 8 characters long");
+          return;
+        }
         setError("");
         const response = await fetch(`${BACKEND_URL}/auth/register`, {
           method: "POST",

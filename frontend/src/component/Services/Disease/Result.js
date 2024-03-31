@@ -22,9 +22,7 @@ const AnimatedResult = ({ result }) => {
         <p className="font-medium text-xl my-2">Disease</p>
         <p>{result.Disease}</p>
         <p className="font-medium text-xl my-2">Description</p>
-        <p>
-          {result.Description}
-        </p>
+        <p>{result.Description}</p>
         <p className="font-medium text-xl my-2">Precautions</p>
         <ul>
           {result.Precautions.map((recommandation, index) => (
@@ -33,6 +31,9 @@ const AnimatedResult = ({ result }) => {
             </li>
           ))}
         </ul>
+
+        <p className="font-medium text-xl my-2">Disclamer</p>
+        <p>Prediciton is based on the data on which model is trained. We CORS Crushers do not guarantee about the prediciton. Please Consult you doctor before it is too late.</p>
       </div>
     </>
   );
