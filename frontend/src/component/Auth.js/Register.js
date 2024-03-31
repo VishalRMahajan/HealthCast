@@ -6,8 +6,8 @@ const Register = ({ setPage }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState("");
-  const [error, setError] = useState("");
+  // const [otp, setOtp] = useState("");
+  const [error] = useState("");
 
   console.log(isLoaded);
 
@@ -66,7 +66,7 @@ const Register = ({ setPage }) => {
             )}
             <div className="flex justify-end mt-2 gap-4">
               <Link className="py-2 text-lg font-semibold" to="/login">
-                Already have a account
+                Sign in
               </Link>
               <button
                 type="submit"

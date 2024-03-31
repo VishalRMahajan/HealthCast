@@ -30,12 +30,12 @@ const Navbar = ({ page }) => {
         >
           About
         </Link>
-        <Link
+        {/* <Link
           to="/contact"
           className={`NavLink ${page === "contact" ? "active" : ""}`}
         >
           Contact
-        </Link>
+        </Link> */}
       </div>
       <div className="AuthLink font-semibold text-xl">
         <Link

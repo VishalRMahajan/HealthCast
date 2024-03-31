@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import About from "./component/About/About";
 import Home from "./component/Home/Home";
 import Services from "./component/Services/Services";
-import Contact from "./component/Contact/Contact";
+// import Contact from "./component/Contact/Contact";
 import Login from "./component/Auth.js/Login";
 import Register from "./component/Auth.js/Register";
 
@@ -27,7 +27,7 @@ function App() {
             {/* About */}
             <Route path="/about" element={<About setPage={setPage} />} />
             {/* Contact */}
-            <Route path="/contact" element={<Contact setPage={setPage} />} />
+            {/* <Route path="/contact" element={<Contact setPage={setPage} />} /> */}
             {/* Auth */}
             <Route path="/login" element={<Login setPage={setPage} />} />
             <Route path="/register" element={<Register setPage={setPage} />} />
