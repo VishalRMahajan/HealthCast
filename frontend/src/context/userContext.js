@@ -17,7 +17,7 @@ const userReducer = (state, action) => {
 
 const UserProvider = ({ children }) => {
   // TODO Change this to true to test the login page
-  const prevUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : "I'm a user, #TrustMeBro"
+  const prevUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
   const [ state, dispatch ] = useReducer(userReducer, { user: prevUser});
 
   console.log("UserContext state:",state);

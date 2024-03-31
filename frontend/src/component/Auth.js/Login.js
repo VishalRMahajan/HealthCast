@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BACKEND_URL } from "../../setup";
+import useUserContext from "../../hooks/useUserContext";
 
 const Login = ({ setPage }) => {
+  const { dispatch } = useUserContext();
   const [isLoaded, setIsLoaded] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,21 +24,31 @@ const Login = ({ setPage }) => {
     } else {
       setError("");
     }
-    console.log("Sending request");
-    const response = await fetch(`${BACKEND_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-    if (!response.ok) {
+
+    const formdata = new FormData();
+    formdata.append("username", username);
+    formdata.append("password", password);
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/auth/login`, {
+        method: "POST",
+        body: formdata,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return setError(data.detail);
+      }
       console.log(data);
-      return setError(data.message);
+      dispatch({ type: "LOGIN", payload: data.access_token });
+      setError("");
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      console.error("Error:", error);
+      setError("An error occurred. Please try again later.");
     }
-    console.log(data);
-    localStorage.setItem("token", data.token);
   };
 
   const inputStyle =

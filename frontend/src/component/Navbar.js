@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useUserContext from "../hooks/useUserContext";
+import Logout from "./Auth.js/Logout";
 
 const Navbar = ({ page }) => {
+  const { user } = useUserContext();
   return (
     <div className="Navbar flex grow-0 items-center justify-between">
       <Link to="/" className="Brand flex items-center">
@@ -12,10 +15,7 @@ const Navbar = ({ page }) => {
         </h1>
       </Link>
       <div className="Menu font-semibold text-xl">
-        <Link
-          to="/"
-          className={`NavLink ${page === "home" ? "active" : ""}`}
-        >
+        <Link to="/" className={`NavLink ${page === "home" ? "active" : ""}`}>
           Home
         </Link>
         <Link
@@ -38,18 +38,28 @@ const Navbar = ({ page }) => {
         </Link> */}
       </div>
       <div className="AuthLink font-semibold text-xl">
-        <Link
-          to="/login"
-          className={`NavLink ${page === "login" ? "active" : ""}`}
-        >
-          Sign In
-        </Link>
-        <Link
-          to="/register"
-          className={`Navlink px-4 py-3 text-white rounded ${page === "register" ? "bg-green-400 hover:bg-green-500" : "bg-orange-400 hover:bg-orange-500"}`}
-        >
-          Sign Up
-        </Link>
+        {user ? (
+          <Logout />
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className={`NavLink ${page === "login" ? "active" : ""}`}
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/register"
+              className={`Navlink px-4 py-3 text-white rounded ${
+                page === "register"
+                  ? "bg-green-400 hover:bg-green-500"
+                  : "bg-orange-400 hover:bg-orange-500"
+              }`}
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
