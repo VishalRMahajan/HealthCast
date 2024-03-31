@@ -45,6 +45,10 @@ Our project aims to address these challenges by developing a machine learning-ba
    - Deploy the system to production environment, ensuring high availability and scalability.
    - Monitor system performance and conduct regular maintenance to address any issues or updates.
 
+## Demo
+https://github.com/VishalRMahajan/HealthCast/assets/111660265/62470540-dbb8-46a3-9ad5-6c342683b869
+
+
 ## Features
 
 - **Machine Learning Models**: Utilizes machine learning models trained on patient-reported symptoms and clinical data to predict diseases accurately.
