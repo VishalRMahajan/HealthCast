@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Team = () => {
   return (
     <div className="Team mt-16">
@@ -9,7 +8,7 @@ const Team = () => {
         <Member
           name="Kevin Nadar"
           img="kevin-transperent.png"
-          title="FastAPI, DBA"
+          title="FastAPI, DevOps"
         />
         <Member
           name="Ajaykumar Nadar"
@@ -18,7 +17,7 @@ const Team = () => {
         />
         <Member
           name="Vishal Mahajan"
-          img="kevin-transperent.png"
+          img="vishal-transparent.png"
           title="FastAPI, ML"
         />
       </div>

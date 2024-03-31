@@ -14,7 +14,7 @@ const Navbar = ({ page }) => {
       <div className="Menu font-semibold text-xl">
         <Link
           to="/"
-          className={`NavLink hover: ${page === "home" ? "active" : ""}`}
+          className={`NavLink ${page === "home" ? "active" : ""}`}
         >
           Home
         </Link>
@@ -26,24 +26,27 @@ const Navbar = ({ page }) => {
         </Link>
         <Link
           to="/about"
-          className={`NavLink hover: ${page === "about" ? "active" : ""}`}
+          className={`NavLink ${page === "about" ? "active" : ""}`}
         >
           About
         </Link>
         <Link
           to="/contact"
-          className={`NavLink hover: ${page === "contact" ? "active" : ""}`}
+          className={`NavLink ${page === "contact" ? "active" : ""}`}
         >
           Contact
         </Link>
       </div>
       <div className="AuthLink font-semibold text-xl">
-        <Link to="/login" className="NavLink">
+        <Link
+          to="/login"
+          className={`NavLink ${page === "login" ? "active" : ""}`}
+        >
           Sign In
         </Link>
         <Link
           to="/register"
-          className="Navlink bg-orange-400 hover:bg-orange-500 px-4 py-3 text-white rounded"
+          className={`Navlink px-4 py-3 text-white rounded ${page === "register" ? "bg-green-400 hover:bg-green-500" : "bg-orange-400 hover:bg-orange-500"}`}
         >
           Sign Up
         </Link>
