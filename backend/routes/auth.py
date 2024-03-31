@@ -74,9 +74,57 @@ async def register(user: UserRegistrationRequest):
             secret = random_base32()
             redis_cache.rpush(email, username, password, str(secret), str(counter))
             redis_cache.expire(email, 300)
-        html = f"""
-        <p>OTP: {HOTP(secret).at(counter)}</p>
-        """
+        html = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Registration OTP</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #ffffff; /* white */
+              color: #333333; /* dark grey */
+            }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              border: 2px solid #ffa500; /* orange */
+              border-radius: 10px;
+            }
+            .logo {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            .logo img {
+              width: 150px;
+            }
+            .otp-section {
+              background-color: #008000; /* green */
+              color: #ffffff; /* white */
+              padding: 10px;
+              text-align: center;
+              border-radius: 5px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h2>Verify OTP</h2>
+            <p>Hello,</p>
+            <p>Thank you for registering on our website. Please use the following One Time Password (OTP) to complete your registration:</p>
+            <div class="otp-section">
+              <h3>Your OTP:</h3>
+              <p style="font-size: 24px;">%s</p> <!-- Example OTP, replace with actual OTP -->
+            </div>
+            <p>If you did not register on our website, please ignore this email.</p>
+            <p>Best regards,<br>Team HealthCast</p>
+          </div>
+        </body>
+        </html>
+        """ % (HOTP(secret).at(counter))
         message = MessageSchema(
             subject="Verify HealthCast Account",
             recipients=[email],
@@ -122,9 +170,10 @@ async def data(body: VerifyUserOTP):
             )
             redis_cache.delete(email)
             redis_cache.connection_pool.close()
+            access_token = manager.create_access_token(data={"sub": username.decode()})
             return JSONResponse(
                 status_code=status.HTTP_200_OK,
-                content="User verified"
+                content={"access_token": access_token, "token_type": "bearer"}
             )
         else:
             raise HTTPException(
