@@ -5,6 +5,7 @@ uvicorn
 gunicorn
 redis
 pyotp==2.9.0
+bcrypt
 sqlalchemy
 python-dotenv
 python-multipart
