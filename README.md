@@ -8,6 +8,12 @@ This repository contains the implementation of a machine learning-based system f
 
 Current healthcare practices often struggle with timely and accurate disease diagnosis, leading to delayed treatment and suboptimal outcomes. Healthcare professionals face challenges in interpreting patient-reported symptoms and clinical data to make accurate diagnoses promptly. This results in significant implications for patient care, including prolonged suffering, increased healthcare costs, and sometimes even adverse health outcomes.
 
+## Domain
+- Domain : AI/ML
+
+## Track
+- Track : HealthCare
+
 ## Proposed Solution
 
 Our project aims to address these challenges by developing a machine learning-based system for disease diagnosis prediction. By leveraging patient-reported symptoms and clinical data, along with advanced algorithms, we intend to enhance diagnostic accuracy and speed. The system will provide healthcare professionals with a valuable decision support tool, enabling earlier intervention and improved patient care.
@@ -19,8 +25,8 @@ Our project aims to address these challenges by developing a machine learning-ba
    - Preprocess the data to handle missing values, normalize features, and ensure data quality.
 
 ### 2. Machine Learning Model Development
-   - Develop machine learning models trained on the collected data to predict diseases based on symptoms and clinical data.
-   - Experiment with various algorithms such as decision trees, random forests, and deep learning models to find the most effective approach.
+   - Develop machine learning models trained on the collected data to predict diseases and probabiltiy of having diabetics based on symptoms and clinical data.
+   - Experiment with various algorithms such as decision trees, Support vector machines, Logistic regression  to find the most effective approach.
 
 ### 3. Frontend Development
    - Develop a user-friendly frontend application using React.
@@ -52,9 +58,10 @@ Our project aims to address these challenges by developing a machine learning-ba
 The project is organized into the following directories:
 
 1. **`frontend`**: This directory contains a React application responsible for the user interface. It provides an intuitive interface for users to input symptoms and receive disease predictions.
-2. **`backend`**: This directory contains the backend implementation of the system. It consists of a FastAPI REST API responsible for handling requests from the frontend and communicating with the machine learning models for disease prediction. Additionally, the backend directory contains the machine learning models used for disease prediction.
+2. **`backend`**: This directory contains the backend implementation of the system. It consists of a FastAPI REST API responsible for handling requests from the frontend and communicating with the machine learning models for disease prediction.
+3. **`Machine Learning`**:  This directory contains the dataset used for training, the trained machine learning model extracted from Jupyter notebook, and the Jupyter notebook itself where the data was processed and the model was trained.
 
-## Usage
+## Usage/Installations
 
 1. **Frontend**:
    - Navigate to the `frontend` directory.
@@ -65,6 +72,26 @@ The project is organized into the following directories:
    - Remain in the root directory.
    - Install dependencies using `pip install -r requirements.txt`.
    - Start the FastAPI server using `uvicorn backend.main:app --reload`.
+  
+## Tech Stack
+- Frontend
+     - ReactJs
+     - Tailwind CSS
+       
+- Backend
+     - FastAPI
+     - PostgreSQL
+       
+- Machine Learning
+     - Scikit Learn
+     - Jupyter
+
+- VCS
+   - Github
+   - Git
+
+- API Testing/Docs
+   - Postman
 
 ## Contributors
 
