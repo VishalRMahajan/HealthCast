@@ -13,7 +13,7 @@ const InputField = ({ label, type, name, placeholder, data, setData }) => {
         value={data}
         onChange={(e) => setData(e.target.value)}
         placeholder={placeholder}
-        className={`border-3 border-solid rounded-lg focus:border-orange-300 ${
+        className={`border-[3px] border-solid rounded-lg focus:border-orange-300 ${
           data !== "" ? "border-green-500" : "border-gray-500 "
         }`}
       />

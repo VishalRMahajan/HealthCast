@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'https://ureckathonbackend.azurewebsites.net';
+export const BACKEND_URL = "https://healthcast.azurewebsites.net";

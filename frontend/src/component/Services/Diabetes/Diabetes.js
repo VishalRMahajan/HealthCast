@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputField from "./InputField";
-import { BACKEND_URL } from "../../setup";
+import { BACKEND_URL } from "../../../setup";
 import Result from "./Result";
 
 const Diabetes = () => {

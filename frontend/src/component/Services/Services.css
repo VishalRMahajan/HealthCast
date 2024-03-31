@@ -2,12 +2,26 @@
   border-top: 2px solid rgb(177, 177, 177);
   margin: 10px 0;
 }
-.Services input {
-  border: solid;
+.Services .Diabetes input {
   padding: 8px 15px;
   margin: 8px 0;
   width: 100%;
 }
+.Services .ListInput input {
+  padding: 8px 15px;
+  margin: 8px 0;
+  width: 100%;
+
+}
+/* .Services .ListInput .InputStyling {
+  margin: 8px 0;
+  width: 100%;
+  overflow: hidden;
+}
+.Services .ListInput .InputStyling input {
+  padding: 8px 15px;
+} */
+
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
