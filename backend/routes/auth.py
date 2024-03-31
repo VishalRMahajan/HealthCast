@@ -1,4 +1,4 @@
-from bcrypt import checkpw
+from bcrypt import gensalt, hashpw, checkpw
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -8,7 +8,7 @@ from pyotp import random_base32, HOTP
 from redis import Redis
 
 from backend.config import EMAIl, PASSWORD, SERVER, REDIS_KEY, REDIS_HOST, REDIS_PORT
-from backend.crud import manager, query_user
+from backend.crud import manager, query_user, add_user
 from backend.schemas import UserRegistrationRequest, VerifyUserOTP
 
 conf = ConnectionConfig(
@@ -105,4 +105,29 @@ async def data(body: VerifyUserOTP):
     redis_cache = Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True)
     username = redis_cache.lindex(email, 0)
     password = redis_cache.lindex(email, 1)
-    secret = redis_cache.lindex(e
+    secret = redis_cache.lindex(email, 2)
+    counter = redis_cache.lindex(email, 3)
+    if counter is None:
+        raise HTTPException(
+            status_code=200,
+            detail="Invalid or expired OTP"
+        )
+    else:
+        hotp = HOTP(secret.decode())
+        if hotp.verify(otp, int(counter.decode())):
+            add_user(
+                email,
+                username.decode(),
+                hashpw(password, gensalt()).decode()
+            )
+            redis_cache.delete(email)
+            redis_cache.connection_pool.close()
+            return JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content="User verified"
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect OTP"
+            )
