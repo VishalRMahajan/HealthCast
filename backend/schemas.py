@@ -7,6 +7,11 @@ class UserRegistrationRequest(BaseModel):
     password: str
 
 
+class VerifyUserOTP(BaseModel):
+    email: EmailStr
+    otp: str
+
+
 class Diabetics(BaseModel):
     pregnancies: int
     glucose: int

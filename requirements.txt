@@ -3,6 +3,8 @@ fastapi-login
 fastapi-mail
 uvicorn
 gunicorn
+redis
+pyotp==2.9.0
 sqlalchemy
 python-dotenv
 python-multipart
