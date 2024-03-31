@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - UreckathonBackend
+name: Build and Deploy Backend to Azure Web App Service
 
 on:
   push:
@@ -26,12 +26,11 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
@@ -49,8 +48,6 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -61,18 +58,10 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_63E95A1F56694585B763AB3F1F5ADBCC }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_806CDAD9875B4DD98C6D48B34589CE0F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_559726059A4D4399B5DCD9F9BA912677 }}
-
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'UreckathonBackend'
+          app-name: 'HealthCast'
           slot-name: 'Production'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_332D6E26B7E24EE291B4EA1EC2EB56D5 }}

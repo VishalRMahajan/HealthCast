@@ -1,6 +1,5 @@
 import json
 import pickle
-import math
 from datetime import datetime, timedelta
 from secrets import token_hex
 
@@ -8,7 +7,8 @@ import numpy as np
 import pandas as pd
 from fastapi_login import LoginManager
 from numpy import array
-from sqlalchemy.exc import NoResultFound
+from pydantic import EmailStr
+from sqlalchemy.exc import NoResultFound, IntegrityError
 
 from backend.config import SECRET
 from backend.database import database
@@ -38,6 +38,18 @@ def query_user(user: str):
         return database.query(Users).filter_by(username=user).one()
     except NoResultFound:
         return None
+
+
+def add_user(email: EmailStr, username: str, password: str):
+    new_user = Users()
+    new_user.username = username
+    new_user.password = password
+    new_user.email = email
+    try:
+        database.add(new_user)
+        database.commit()
+    except IntegrityError:
+        database.rollback()
 
 
 def add_diabetics(user: Users, data: Diabetics):

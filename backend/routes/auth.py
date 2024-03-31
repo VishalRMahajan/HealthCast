@@ -7,7 +7,7 @@ from pyotp import random_base32, HOTP
 from redis import Redis
 
 from backend.config import EMAIl, PASSWORD, SERVER, REDIS_KEY, REDIS_HOST, REDIS_PORT
-from backend.crud import manager, query_user
+from backend.crud import manager, add_user, query_user
 from backend.schemas import UserRegistrationRequest, VerifyUserOTP
 
 conf = ConnectionConfig(
@@ -24,7 +24,6 @@ conf = ConnectionConfig(
 
 router = APIRouter(prefix="/auth")
 email_server = FastMail(conf)
-secret = None
 redis_host = REDIS_HOST
 redis_port = REDIS_PORT
 redis_password = REDIS_KEY
@@ -60,17 +59,17 @@ async def register(user: UserRegistrationRequest):
     if user is not None:
         return RedirectResponse(url="/auth/login")
     else:
-        redis_client = Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True)
-        counter = redis_client.lindex(email, -1)
-        secret = redis_client.lindex(email, 2)
+        redis_cache = Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True)
+        counter = redis_cache.lindex(email, -1)
+        secret = redis_cache.lindex(email, 2)
         if counter is not None:
             counter = int(counter.decode()) + 1
-            redis_client.lset(email, -1, str(counter))
+            redis_cache.lset(email, -1, str(counter))
         else:
             counter = 0
             secret = random_base32()
-            redis_client.rpush(email, username, password, str(secret), str(counter))
-            redis_client.expire(email, 300)
+            redis_cache.rpush(email, username, password, str(secret), str(counter))
+            redis_cache.expire(email, 300)
         html = f"""
         <p>OTP: {HOTP(secret).at(counter)}</p>
         """
@@ -92,18 +91,18 @@ async def register(user: UserRegistrationRequest):
                 detail=str(e)
             )
         finally:
-            redis_client.connection_pool.close()
+            redis_cache.connection_pool.close()
 
 
 @router.post("/verify")
 async def data(body: VerifyUserOTP):
     email = body.email
     otp = body.otp
-    redis_client = Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True)
-    username = redis_client.lindex(email, 0)
-    password = redis_client.lindex(email, 1)
-    secret = redis_client.lindex(email, 2)
-    counter = redis_client.lindex(email, 3)
+    redis_cache = Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True)
+    username = redis_cache.lindex(email, 0)
+    password = redis_cache.lindex(email, 1)
+    secret = redis_cache.lindex(email, 2)
+    counter = redis_cache.lindex(email, 3)
     if counter is None:
         raise HTTPException(
             status_code=200,
@@ -112,9 +111,9 @@ async def data(body: VerifyUserOTP):
     else:
         hotp = HOTP(secret.decode())
         if hotp.verify(otp, int(counter.decode())):
-            print(f"Username: {username.decode()}\nPassword: {password.decode()}")
-            redis_client.delete(email)
-            redis_client.connection_pool.close()
+            add_user(email, username.decode(), password.decode())
+            redis_cache.delete(email)
+            redis_cache.connection_pool.close()
             return JSONResponse(
                 status_code=status.HTTP_200_OK,
                 content="User verified"
